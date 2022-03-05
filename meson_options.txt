@@ -1,0 +1,2 @@
+option('cpp', type : 'feature', value : 'enabled',
+		description: 'Include C++ support')

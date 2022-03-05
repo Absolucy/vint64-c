@@ -1,0 +1,40 @@
+{
+	"C_Cpp.default.includePath": [
+		"${default}",
+		"${workspaceFolder}/c",
+		"${workspaceFolder}/subprojects/unity/src"
+	],
+	"files.associations": {
+		"cstddef": "cpp",
+		"bit": "cpp",
+		"compare": "cpp",
+		"concepts": "cpp",
+		"cstdint": "cpp",
+		"cstdio": "cpp",
+		"cstdlib": "cpp",
+		"cstring": "cpp",
+		"cwchar": "cpp",
+		"exception": "cpp",
+		"initializer_list": "cpp",
+		"limits": "cpp",
+		"new": "cpp",
+		"tuple": "cpp",
+		"type_traits": "cpp",
+		"utility": "cpp",
+		"vector": "cpp",
+		"xmemory": "cpp",
+		"xstddef": "cpp",
+		"xtr1common": "cpp",
+		"xutility": "cpp",
+		"stdexcept": "cpp",
+		"iosfwd": "cpp",
+		"xstring": "cpp",
+		"unity.h": "c",
+		"vint64.h": "c",
+		"string.h": "c"
+	},
+	"C_Cpp.codeAnalysis.clangTidy.checks.disabled": [
+		"clang-analyzer-unix.Malloc",
+		"clang-analyzer-security.insecureAPI.*"
+	]
+}
