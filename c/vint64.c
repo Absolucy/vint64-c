@@ -4,16 +4,16 @@
 #include <stdio.h>
 #include <string.h>
 
-size_t length_as_vint64(uint64_t value) {
-	static const size_t lookup_table[65] = {9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7,
-											6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 3,
-											3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1};
+uint8_t length_as_vint64(uint64_t value) {
+	static const uint8_t lookup_table[65] = {9, 9, 9, 9, 9, 9, 9, 9, 8, 8, 8, 8, 8, 8, 8, 7, 7, 7, 7, 7, 7, 7,
+											 6, 6, 6, 6, 6, 6, 6, 5, 5, 5, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4, 3,
+											 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1};
 	int leading = leading_zeros(value);
 	assume(leading >= 0 && leading <= 64);
 	return lookup_table[leading];
 }
 
-size_t length_as_signed_vint64(int64_t value) { return length_as_vint64(zigzag_encode(value)); }
+uint8_t length_as_signed_vint64(int64_t value) { return length_as_vint64(zigzag_encode(value)); }
 
 Vint64 vint64_init(uint64_t value) {
 	Vint64 vint;
@@ -30,9 +30,9 @@ Vint64 vint64_init(uint64_t value) {
 
 Vint64 vint64_init_signed(int64_t value) { return vint64_init(zigzag_encode(value)); }
 
-size_t vint64_length(uint8_t first_byte) {
+uint8_t vint64_length(uint8_t first_byte) {
 	if (first_byte == 0) return 9;
-	return trailing_zeros(first_byte) + 1;
+	return (uint8_t)trailing_zeros(first_byte) + 1;
 }
 
 uint64_t vint64_value(Vint64* vint) {

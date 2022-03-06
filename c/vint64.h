@@ -28,9 +28,11 @@
 #endif
 #elif defined(_MSC_VER) // msvc has _BitScanForward, which is about the same thing but slightly less convienient
 #include <intrin.h>
+#define assume __assume
 static inline int trailing_zeros(uint32_t value) {
 	unsigned long trailing_zero = 0;
 	if (_BitScanForward(&trailing_zero, value)) {
+		assume(trailing_zero >= 0 && trailing_zero <= 32);
 		return trailing_zero;
 	} else {
 		return 32;
@@ -44,7 +46,6 @@ static inline int leading_zeros(uint64_t value) {
 		return 64;
 	}
 }
-#define assume __assume
 #else // unknown compiler
 // Source: https://stackoverflow.com/a/7813486
 static inline int ctz(uint32_t value) {
@@ -95,13 +96,13 @@ typedef struct Vint64 {
  * @param value The unsigned integer to measure the Vint64 length of.
  * @return The length of a vint64 containing the given value.
  */
-EXPORT size_t length_as_vint64(uint64_t value);
+EXPORT uint8_t length_as_vint64(uint64_t value);
 /**
  * Gets the length that an signed integer would have when encoded as Vint64.
  * @param value The signed integer to measure the Vint64 length of.
  * @return The length of a vint64 containing the given value.
  */
-EXPORT size_t length_as_signed_vint64(int64_t value);
+EXPORT uint8_t length_as_signed_vint64(int64_t value);
 /**
  * Initializes a Vint64 with the given unsigned integer.
  * @param value The unsigned integer to initialize the Vint64 with.
@@ -119,7 +120,7 @@ EXPORT Vint64 vint64_init_signed(int64_t value);
  * @param first_byte The first byte of the Vint64.
  * @return The length of the Vint64.
  */
-EXPORT size_t vint64_length(uint8_t first_byte);
+EXPORT uint8_t vint64_length(uint8_t first_byte);
 /**
  * Decodes a Vint64 into an unsigned 64-bit integer.
  * @param vint The Vint64 to decode.
